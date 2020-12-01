@@ -17,11 +17,25 @@ class UsersTableSeeder extends Seeder
             'email' => 'magrmobile@gmail.com',
             'email_verified_at' => now(),
             'password' => bcrypt('hanoi2979'), // secret
-            'dni' => '027036616',
-            'address' => '',
-            'phone' => '',
             'role' => 'admin',
         ]);
-        factory(User::class, 50)->create();
+
+        User::create([
+            'name' => 'Paciente 1',
+            'email' => 'patient@gmail.com',
+            'email_verified_at' => now(),
+            'password' => bcrypt('hanoi2979'), // secret
+            'role' => 'patient',
+        ]);
+
+        User::create([
+            'name' => 'Medico 1',
+            'email' => 'doctor@gmail.com',
+            'email_verified_at' => now(),
+            'password' => bcrypt('hanoi2979'), // secret
+            'role' => 'doctor',
+        ]);
+
+        factory(User::class, 50)->states('patient')->create();
     }
 }

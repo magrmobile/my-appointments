@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('/login'); // view('welcome');
 });
 
 Auth::routes();
@@ -35,6 +35,9 @@ Route::middleware(['auth','admin'])->namespace('Admin')->group(function() {
 
     // Patients
     Route::resource('patients', 'PatientController');
+
+    // Charts
+    Route::get('/charts/appointments/line', 'ChartsController@appointments');
 });
 
 // Doctor
@@ -44,3 +47,24 @@ Route::middleware(['auth','doctor'])->namespace('Doctor')->group(function() {
     Route::post('/schedule', 'ScheduleController@store');
 });
 
+Route::middleware('auth')->group(function(){
+    Route::get('/appointments/create', 'AppointmentController@create');
+    Route::post('/appointments', 'AppointmentController@store');
+
+    /*
+    /appointments -> Verificar
+    -> que variables pasar a la vista
+    -> 1 unico blade (condiciones)
+    */
+    Route::get('/appointments', 'AppointmentController@index');
+    Route::get('/appointments/{appointment}', 'AppointmentController@show');
+
+    Route::get('/appointments/{appointment}/cancel', 'AppointmentController@showCancelForm');
+    Route::post('/appointments/{appointment}/cancel', 'AppointmentController@postCancel');
+
+    Route::post('/appointments/{appointment}/confirm', 'AppointmentController@postConfirm');
+    
+    // JSON
+    Route::get('/specialties/{specialty}/doctors', 'Api\SpecialtyController@doctors');
+    Route::get('/schedule/hours', 'Api\ScheduleController@hours');
+});
