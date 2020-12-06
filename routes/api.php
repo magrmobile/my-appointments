@@ -13,6 +13,17 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('/login', 'AuthController@login');
+
+// Public Resources
+Route::get('/specialties', 'SpecialtyController@index');
+Route::get('/specialties/{specialty}/doctors', 'SpecialtyController@doctors');
+Route::get('/schedule/hours', 'ScheduleController@hours');
+
+Route::group(['middleware' => ['auth:api']], function () {
+    
+    Route::get('/user', 'UserController@show');
+    Route::post('/logout', 'AuthController@logout');
+
+    // Post Appointment
 });
