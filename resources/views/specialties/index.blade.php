@@ -9,7 +9,7 @@
         </div>
         <div class="col text-right">
             <a href="{{ url('specialties/create') }}" class="btn btn-sm btn-success">
-                Nueva especialidad
+                Nuevo especialidad
             </a>
         </div>
         </div>
